@@ -7,11 +7,11 @@
     x-init="init()"
     class="space-y-6"
 >
-    <div class="grid gap-4 lg:grid-cols-2">
-        <div class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
-            <div class="flex flex-col gap-6 sm:flex-row sm:items-center">
-                <div class="relative shrink-0 mx-auto sm:mx-0">
-                    <svg class="w-28 h-28 -rotate-90" viewBox="0 0 120 120" aria-hidden="true">
+    <div class="space-y-4">
+        <div class="bg-white rounded-2xl border border-gray-200 p-5 shadow-sm">
+            <div class="flex items-center gap-5">
+                <div class="relative shrink-0">
+                    <svg class="w-24 h-24 -rotate-90" viewBox="0 0 120 120" aria-hidden="true">
                         <circle cx="60" cy="60" r="52" fill="none" stroke="#e5e7eb" stroke-width="10"/>
                         <circle
                             cx="60"
@@ -26,43 +26,31 @@
                     </svg>
                     <div class="absolute inset-0 flex flex-col items-center justify-center">
                         <span class="text-2xl font-bold text-gray-900" x-text="readyPercent + '%'"></span>
-                        <span class="text-xs font-medium uppercase tracking-wide text-gray-500">ready</span>
+                        <span class="text-[10px] font-medium uppercase tracking-wide text-gray-500">ready</span>
                     </div>
                 </div>
 
-                <div class="flex-1 min-w-0 space-y-3 text-center sm:text-left">
-                    <div>
-                        <h2 class="text-xl font-semibold text-gray-900" x-text="progressHeadline"></h2>
-                        <p class="mt-1 text-sm text-gray-600" x-text="greenCount + ' of ' + totalControls + ' controls are green'"></p>
-                    </div>
-
-                    <div class="grid gap-2 grid-cols-3">
-                        <div class="rounded-lg border border-green-100 bg-green-50 px-3 py-2 text-left">
-                            <p class="text-xs font-semibold uppercase tracking-wide text-green-700">Green</p>
-                            <p class="mt-0.5 text-xl font-semibold text-green-900" x-text="greenCount"></p>
-                        </div>
-                        <div class="rounded-lg border border-amber-100 bg-amber-50 px-3 py-2 text-left">
-                            <p class="text-xs font-semibold uppercase tracking-wide text-amber-700">Amber</p>
-                            <p class="mt-0.5 text-xl font-semibold text-amber-900" x-text="amberCount"></p>
-                        </div>
-                        <div class="rounded-lg border border-red-100 bg-red-50 px-3 py-2 text-left">
-                            <p class="text-xs font-semibold uppercase tracking-wide text-red-700">Red</p>
-                            <p class="mt-0.5 text-xl font-semibold text-red-900" x-text="redCount"></p>
-                        </div>
+                <div class="flex-1 min-w-0">
+                    <h2 class="text-lg font-semibold text-gray-900" x-text="progressHeadline"></h2>
+                    <p class="mt-1 text-sm text-gray-500" x-text="greenCount + ' of ' + totalControls + ' controls are green'"></p>
+                    <div class="mt-3 flex gap-4 text-sm">
+                        <span class="inline-flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-full bg-green-500"></span> <span class="font-semibold text-gray-900" x-text="greenCount"></span> <span class="text-gray-500">Green</span></span>
+                        <span class="inline-flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-full bg-amber-400"></span> <span class="font-semibold text-gray-900" x-text="amberCount"></span> <span class="text-gray-500">Amber</span></span>
+                        <span class="inline-flex items-center gap-1.5"><span class="h-2.5 w-2.5 rounded-full bg-red-500"></span> <span class="font-semibold text-gray-900" x-text="redCount"></span> <span class="text-gray-500">Red</span></span>
                     </div>
                 </div>
             </div>
 
             <div class="mt-5 pt-5 border-t border-gray-100">
                 <p class="text-xs font-semibold uppercase tracking-wide text-gray-500 mb-3">Section breakdown</p>
-                <div class="grid gap-2 sm:grid-cols-2">
+                <div class="grid gap-x-5 gap-y-2 grid-cols-2">
                     <template x-for="section in allSections" :key="'bar-' + section.id">
                         <div>
                             <div class="flex justify-between text-xs text-gray-600 mb-1">
                                 <span x-text="section.shortName"></span>
                                 <span x-text="sectionGreenPercent(section.id) + '%'"></span>
                             </div>
-                            <div class="flex h-2 rounded-full overflow-hidden bg-gray-100">
+                            <div class="flex h-1.5 rounded-full overflow-hidden bg-gray-100">
                                 <div class="bg-green-500 transition-all" :style="'width:' + sectionGreenPercent(section.id) + '%'"></div>
                                 <div class="bg-amber-400 transition-all" :style="'width:' + sectionAmberPercent(section.id) + '%'"></div>
                                 <div class="bg-red-400 transition-all" :style="'width:' + sectionRedPercent(section.id) + '%'"></div>
@@ -71,49 +59,42 @@
                     </template>
                 </div>
             </div>
+
+            <div class="mt-5 pt-5 border-t border-gray-100 flex flex-wrap items-center gap-2">
+                <button
+                    type="button"
+                    @click="activeTab = 'priorities'"
+                    class="inline-flex items-center justify-center rounded-lg bg-slate-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-slate-800"
+                >
+                    Review Priorities
+                </button>
+                <button
+                    type="button"
+                    @click="copySummary()"
+                    class="inline-flex items-center justify-center rounded-lg border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50"
+                >
+                    <span x-text="copied ? 'Copied!' : 'Copy summary'"></span>
+                </button>
+                <button
+                    type="button"
+                    @click="resetAssessment()"
+                    class="inline-flex items-center justify-center rounded-lg border border-red-200 bg-white px-4 py-2 text-sm font-medium text-red-700 transition-colors hover:bg-red-50"
+                >
+                    Reset
+                </button>
+                <span class="ml-auto text-xs text-gray-400" x-text="lastSavedAt ? 'Saved ' + formatTimestamp(lastSavedAt) : ''"></span>
+                <p x-show="copyError" x-cloak class="w-full text-sm text-red-600" x-text="copyError"></p>
+            </div>
         </div>
 
-        <div class="rounded-2xl border border-sky-100 bg-gradient-to-br from-sky-50 via-white to-emerald-50 p-6 shadow-sm">
-            <div class="flex flex-col gap-5 h-full">
-                <div>
-                    <p class="text-xs font-semibold uppercase tracking-[0.18em] text-sky-700">How To Use It</p>
-                    <div class="mt-3 space-y-3 text-sm text-slate-700">
-                        <p><strong>1.</strong> Toggle the public security claims your organisation makes.</p>
-                        <p><strong>2.</strong> Set each ISO control to Red, Amber, or Green using the status buttons below.</p>
-                        <p><strong>3.</strong> Use the priorities tab to work through gaps and export the summary when you are done.</p>
-                    </div>
+        <div class="rounded-2xl border border-sky-100 bg-gradient-to-br from-sky-50 via-white to-emerald-50 p-4 shadow-sm">
+            <div class="flex items-start gap-3">
+                <svg class="w-5 h-5 text-sky-500 shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+                <div class="text-sm text-slate-700">
+                    <strong>1.</strong> Toggle your public security claims.
+                    <strong>2.</strong> Set each control to Red, Amber, or Green.
+                    <strong>3.</strong> Use Priorities to work through gaps and export. All data stays in your browser.
                 </div>
-
-                <div class="rounded-xl border border-sky-100 bg-white/80 px-4 py-3 text-sm text-slate-700">
-                    <p class="font-medium text-slate-900">Saved in this browser</p>
-                    <p class="mt-1 text-slate-600" x-text="lastSavedAt ? 'Last updated ' + formatTimestamp(lastSavedAt) : 'No saved assessment yet.'"></p>
-                </div>
-
-                <div class="mt-auto flex flex-wrap gap-2">
-                    <button
-                        type="button"
-                        @click="activeTab = 'priorities'"
-                        class="inline-flex items-center justify-center rounded-lg bg-slate-900 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-slate-800"
-                    >
-                        Review Priorities
-                    </button>
-                    <button
-                        type="button"
-                        @click="copySummary()"
-                        class="inline-flex items-center justify-center rounded-lg border border-slate-300 bg-white px-4 py-2.5 text-sm font-medium text-slate-700 transition-colors hover:bg-slate-50"
-                    >
-                        <span x-text="copied ? 'Copied summary' : 'Copy summary'"></span>
-                    </button>
-                    <button
-                        type="button"
-                        @click="resetAssessment()"
-                        class="inline-flex items-center justify-center rounded-lg border border-red-200 bg-white px-4 py-2.5 text-sm font-medium text-red-700 transition-colors hover:bg-red-50"
-                    >
-                        Reset Assessment
-                    </button>
-                </div>
-
-                <p x-show="copyError" x-cloak class="text-sm text-red-600" x-text="copyError"></p>
             </div>
         </div>
     </div>
