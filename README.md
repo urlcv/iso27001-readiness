@@ -8,7 +8,7 @@
 
 ## What it does
 
-A Vanta-style traffic-light self-assessment that helps organisations gauge how ready they are for ISO 27001:2022 certification. Rate each control as **Red** (not started), **Amber** (in progress), or **Green** (fully implemented) and see your overall readiness at a glance.
+A traffic-light self-assessment that helps organisations gauge how ready they are for ISO 27001:2022 certification. Rate each control as **Red** (not started), **Amber** (in progress), or **Green** (fully implemented) and see your overall readiness at a glance.
 
 **Goal: get all lights green = ready for certification.**
 
