@@ -1,0 +1,34 @@
+{
+    "name": "urlcv/iso27001-readiness",
+    "description": "Vanta-style traffic-light readiness assessment for ISO 27001:2022 certification. Powers the free ISO 27001 Readiness tool at urlcv.com.",
+    "type": "library",
+    "license": "MIT",
+    "keywords": ["iso27001", "compliance", "audit", "infosec", "governance", "readiness", "traffic-light"],
+    "homepage": "https://urlcv.com/tools/iso27001-readiness",
+    "authors": [
+        {
+            "name": "URLCV",
+            "homepage": "https://urlcv.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "URLCV\\Iso27001Readiness\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "URLCV\\Iso27001Readiness\\Laravel\\Iso27001ReadinessServiceProvider"
+            ]
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "minimum-stability": "stable"
+}
